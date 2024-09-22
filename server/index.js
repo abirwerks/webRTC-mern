@@ -16,7 +16,9 @@ io.on("connection", (socket) => {
     const { roomId, emailId } = data;
     console.log("User", emailId, "Joined Room", roomId);
     emailToSocketMapping.set(emailId, socket.id);
+    console.log(emailToSocketMapping);
     socket.join(roomId);
+    socket.emit("joined-room", { roomId });
     socket.broadcast.to(roomId).emit("user-joined", { emailId });
   });
   console.log("socket connected", socket.id);
