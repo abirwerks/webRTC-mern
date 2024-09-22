@@ -3,6 +3,8 @@ import { Routes, Route } from "react-router-dom";
 import "./App.css";
 import Homepage from "./pages/Home";
 import { SocketProvider } from "./providers/Socket";
+import { PeerProvider } from "./providers/Peer";
+import RoomPage from "./pages/Room";
 
 function App() {
   // const [count, setCount] = useState(0);
@@ -10,10 +12,13 @@ function App() {
   return (
     <div className="App">
       <SocketProvider>
-        <Routes>
-          <Route path="/" element={<Homepage />}></Route>
-          <Route path="/home" element={<h1>Home two</h1>}></Route>
-        </Routes>
+        <PeerProvider>
+          <Routes>
+            <Route path="/" element={<Homepage />}></Route>
+            <Route path="/home" element={<h1>Home two</h1>}></Route>
+            <Route path="/room/:roomId" element={<RoomPage />}></Route>
+          </Routes>
+        </PeerProvider>
       </SocketProvider>
     </div>
   );
