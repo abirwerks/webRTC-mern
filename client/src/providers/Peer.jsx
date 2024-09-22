@@ -43,19 +43,13 @@ export const PeerProvider = (props) => {
     setRemoteStream(streams[0]);
   }, []);
 
-  const handleNegotiation = useCallback(() => {
-    console.log("negotiationneeded");
-  }, []);
-
   useEffect(() => {
     peer.addEventListener("track", handleTrackEvent);
-    peer.addEventListener("negotiationneeded", handleNegotiation);
 
     return () => {
       peer.removeEventListener("track", handleTrackEvent);
-      peer.removeEventListener("negotiationneeded", handleNegotiation);
     };
-  }, [peer, handleTrackEvent, handleNegotiation]);
+  }, [peer, handleTrackEvent]);
 
   return (
     <PeerContext.Provider

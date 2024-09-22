@@ -67,6 +67,18 @@ const RoomPage = () => {
     };
   }, [handleCallAccepted, handleNewUserJoined, handleIncommingCall, socket]);
 
+  const handleNegotiation = useCallback(() => {
+    const localOffer = peer.localDescription;
+    socket.emit("call-user", { emailId: remoteEmailId, offer: localOffer });
+  }, [peer.localDescription, remoteEmailId, socket]);
+
+  useEffect(() => {
+    peer.addEventListener("negotiationneeded", handleNegotiation);
+    return () => {
+      peer.removeEventListener("negotiationneeded", handleNegotiation);
+    };
+  }, []);
+
   useEffect(() => {
     getUserMediaStream();
   }, [getUserMediaStream]);
